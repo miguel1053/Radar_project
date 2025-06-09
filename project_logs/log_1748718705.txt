@@ -1,0 +1,2 @@
+2025-05-31 19:11:45 - [INFO] Conectado à /dev/ttyUSB1 a 115200 baud.
+2025-05-31 19:11:51 - [INFO] Dispositivo desconectado.
