@@ -1,0 +1,62 @@
+# Arquivos e diretórios a serem ignorados pelo Git
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Ambiente virtual Python
+.venv/
+venv/
+ENV/
+
+# Arquivos de log
+*.log
+logs/
+project_logs/
+
+# Arquivos de dados persistentes (se não devem ser versionados)
+persistent_data/
+
+# Arquivos específicos do Lazarus/FPC (compilação)
+*.ppu
+*.o
+*.or
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.bak
+*.~*
+lib/
+backup/
+
+# Arquivos de configuração local (se houver)
+config.local.ini
+.env
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+
