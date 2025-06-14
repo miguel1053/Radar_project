@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="C:\lazarus\fpc\3.2.2\bin\i386-win32\fpc.exe" Date="1520656561"/>
+  <Params Value="-MObjFPC -Scghi -O1 -gw3 -gl -WG -l -vewnhibq -FiC:\Projetos\CLDSPEED\LazarusCLDSpeed\lib\i386-win32 -FuC:\Projetos\CLDSPEED\LazarusCLDSpeed\ -FuC:\Users\silvi\AppData\Local\lazarus\onlinepackagemanager\packages\lnet\lazaruspackage\lib\i386-win32 -FuC:\lazarus\components\ideintf\units\i386-win32\win32 -FuC:\lazarus\components\lazcontrols\lib\i386-win32\win32 -FuC:\lazarus\lcl\units\i386-win32\win32 -FuC:\lazarus\lcl\units\i386-win32 -FuC:\lazarus\components\freetype\lib\i386-win32 -FuC:\lazarus\components\debuggerintf\lib\i386-win32 -FuC:\lazarus\components\buildintf\units\i386-win32 -FuC:\lazarus\components\lazutils\lib\i386-win32 -FuC:\lazarus\components\lazdebuggers\lazdebuggerintf\lib\i386-win32 -FuC:\lazarus\packager\units\i386-win32 -FUC:\Projetos\CLDSPEED\LazarusCLDSpeed\lib\i386-win32\ -FEC:\Projetos\CLDSPEED\LazarusCLDSpeed\ -oC:\Projetos\CLDSPEED\LazarusCLDSpeed\TECSPEEDPRO.exe -dLCL -dLCLwin32 TECSPEEDPRO.lpr"/>
+</CONFIG>

@@ -8,7 +8,7 @@ Este projeto visa evoluir uma aplicação gráfica em container Linux, adicionan
 - `start_lazarus_app.sh`: Script de inicialização do container, responsável por:
     - Sincronizar o horário do container com um servidor NTP.
     - Detectar dinamicamente as portas seriais disponíveis (TTY e USB).
-    - Iniciar a aplicação Lazarus.
+    - Iniciar a aplicação Lazarus (`TECSPEEDPRO`).
 - `gui_app.py`: (Opcional) Sua aplicação gráfica original em Python.
 - `requirements.txt`: Dependências Python do projeto.
 - `persistent_data/`: Diretório para dados persistentes (ex: logs).

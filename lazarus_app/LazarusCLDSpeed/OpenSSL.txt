@@ -1,0 +1,4 @@
+https://indy.fulgan.com/SSL/
+sudo apt-get install openssl
+
+sudo yum install openssl
