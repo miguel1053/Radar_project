@@ -22,6 +22,7 @@ RUN apt-get update && apt-get install -y \
     psmisc \
     ntpdate \
     ca-certificates \
+    libssl-dev \
     --no-install-recommends && \
     usermod -a -G dialout root && \
     rm -rf /var/lib/apt/lists/*
@@ -38,7 +39,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY gui_app.py .
 
 # Copiar binário já compilado da aplicação Lazarus
-COPY /lazarus_app/LazarusCLDSpeed /app/lazarus_app/
+COPY lazarus_app/LazarusCLDSpeed /app/lazarus_app/
 
 # Copiar script de start
 COPY start_lazarus_app.sh /app/start_lazarus_app.sh
