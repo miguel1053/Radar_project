@@ -19,11 +19,6 @@ RUN apt-get update && apt-get install -y \
     libgtk2.0-0 \
     libgtk2.0-dev \
     psmisc \
-    tigervnc-standalone-server \
-    tigervnc-common \
-    tigervnc-tools \   
-    xfce4 \
-    xfce4-goodies \
     ntpdate \
     ca-certificates \
     --no-install-recommends && \
@@ -49,16 +44,15 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY gui_app.py .
-COPY start_vnc_lazarus.sh /app/start_vnc_lazarus.sh
-RUN chmod +x /app/start_vnc_lazarus.sh
 
-# Etapa 4: Configurar senha VNC em instrução separada
-RUN mkdir -p /root/.vnc
-RUN echo "password" | vncpasswd -f > /root/.vnc/passwd
-RUN chmod 600 /root/.vnc/passwd
-
-# Expor porta do VNC
-EXPOSE 5901
+# Copiar e compilar a aplicação Lazarus
+# A aplicação Lazarus está dentro de um subdiretório 'lazarus' no zip enviado
+COPY lazarus_app/lazarus /app/lazarus_app
+WORKDIR /app/lazarus_app
+RUN /usr/bin/lazbuild RadarApp.lpr
+WORKDIR /app
 
 # Entrypoint
-CMD ["/app/start_vnc_lazarus.sh"]
+CMD ["/app/start_lazarus_app.sh"]
+
+
