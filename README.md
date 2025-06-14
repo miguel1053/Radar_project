@@ -8,7 +8,7 @@ Este projeto visa evoluir uma aplicação gráfica em container Linux, adicionan
 - `start_lazarus_app.sh`: Script de inicialização do container, responsável por:
     - Sincronizar o horário do container com um servidor NTP.
     - Detectar dinamicamente as portas seriais disponíveis (TTY e USB).
-    - Iniciar a aplicação Lazarus (`TECSPEEDPRO`).
+    - Iniciar a aplicação Lazarus.
 - `gui_app.py`: (Opcional) Sua aplicação gráfica original em Python.
 - `requirements.txt`: Dependências Python do projeto.
 - `persistent_data/`: Diretório para dados persistentes (ex: logs).
@@ -30,19 +30,18 @@ Navegue até o diretório raiz do projeto (onde o `Dockerfile` está localizado)
 sudo docker build -t lazarus-x11-app .
 ```
 
-### Executando o Container com Encaminhamento X11 e Acesso à Rede
+### Executando o Container com Encaminhamento X11
 
-Para executar o container e exibir a aplicação gráfica na sua máquina host via X11, e garantir comunicação com o hardware local (ex: `192.168.1.50`) e acesso à internet, você pode usar o modo de rede `host`.
+Para executar o container e exibir a aplicação gráfica na sua máquina host via X11, você precisará permitir conexões X11 do Docker e mapear o socket X11. Substitua `/dev/ttyUSB0` pelo caminho correto do seu dispositivo serial, se houver.
 
 1.  **Permitir conexões X11 do Docker (no seu host):**
     ```bash
     xhost +local:docker
     ```
 
-2.  **Executar o container com rede `host`:**
+2.  **Executar o container:**
     ```bash
     sudo docker run -it --rm \
-        --network=host \
         -e DISPLAY=$DISPLAY \
         -v /tmp/.X11-unix:/tmp/.X11-unix \
         --device=/dev/ttyUSB0:/dev/ttyUSB0 \
@@ -50,7 +49,6 @@ Para executar o container e exibir a aplicação gráfica na sua máquina host v
         lazarus-x11-app
     ```
 
-- `--network=host`: Faz com que o container compartilhe a pilha de rede do host. Isso significa que o container terá acesso direto à rede local do seu host e à internet, como se estivesse rodando diretamente na sua máquina.
 - `-e DISPLAY=$DISPLAY`: Passa a variável de ambiente `DISPLAY` do seu host para o container.
 - `-v /tmp/.X11-unix:/tmp/.X11-unix`: Monta o socket X11 do seu host no container, permitindo a comunicação gráfica.
 - `--device=/dev/ttyUSB0:/dev/ttyUSB0`: Mapeia um dispositivo serial do host para o container. Repita esta flag para cada dispositivo serial que você precisar.
