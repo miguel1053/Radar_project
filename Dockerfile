@@ -38,7 +38,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY gui_app.py .
 
 # Copiar binário já compilado da aplicação Lazarus
-COPY lazarus_app/LazarusCLDSpeed /app/lazarus_app/
+COPY /lazarus_app/LazarusCLDSpeed /app/lazarus_app/
 
 # Copiar script de start
 COPY start_lazarus_app.sh /app/start_lazarus_app.sh

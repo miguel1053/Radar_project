@@ -1,0 +1,7 @@
+2025-06-03 10:33:11 - [INFO] Conectado à /dev/ttyUSB0 a 9600 baud.
+2025-06-03 10:33:14 - [RECEBIDO] Iniciando comunicação...
+2025-06-03 10:33:15 - [RECEBIDO] Iniciando passagem...
+2025-06-03 10:33:15 - [RECEBIDO] Placa detectada: LRF8024
+2025-06-03 10:33:16 - [RECEBIDO] Velocidade: 31 km/h
+2025-06-03 10:33:16 - [RECEBIDO] Passagem finalizada.
+2025-06-03 10:33:22 - [INFO] Dispositivo desconectado.
