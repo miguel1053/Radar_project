@@ -1,57 +1,62 @@
-# Projeto Radar com Lazarus, VNC e Comunicação TCP
+# Projeto Radar com Lazarus e Comunicação TCP
 
-Este projeto visa evoluir uma aplicação gráfica em container Linux, adicionando suporte a aplicações Lazarus, comunicação de rede TCP, acesso via VNC, detecção dinâmica de portas seriais e sincronização de horário.
+Este projeto visa evoluir uma aplicação gráfica em container Linux, adicionando suporte a aplicações Lazarus, comunicação de rede TCP, detecção dinâmica de portas seriais e sincronização de horário, utilizando encaminhamento X11 para exibição da interface gráfica.
 
 ## Estrutura do Projeto
 
-- `Dockerfile`: Define o ambiente do container, incluindo Lazarus, VNC, Python e as dependências necessárias.
-- `start_vnc_lazarus.sh`: Script de inicialização do container, responsável por:
+- `Dockerfile`: Define o ambiente do container, incluindo Lazarus, Python e as dependências necessárias.
+- `start_lazarus_app.sh`: Script de inicialização do container, responsável por:
     - Sincronizar o horário do container com um servidor NTP.
-    - Iniciar o servidor VNC.
     - Detectar dinamicamente as portas seriais disponíveis (TTY e USB).
-    - Iniciar a aplicação Lazarus (ou a aplicação Python, se preferir).
+    - Iniciar a aplicação Lazarus.
 - `gui_app.py`: (Opcional) Sua aplicação gráfica original em Python.
 - `requirements.txt`: Dependências Python do projeto.
 - `persistent_data/`: Diretório para dados persistentes (ex: logs).
 - `project_logs/`: Diretório para logs do projeto.
+- `lazarus_app/`: Contém os arquivos da aplicação Lazarus.
 
 ## Como Usar
 
 ### Pré-requisitos
 
 - Docker instalado em sua máquina.
+- Servidor X em seu host (ambiente Linux).
 
 ### Construindo a Imagem Docker
 
-Navegue até o diretório `radar` (onde o `Dockerfile` está localizado) e execute o seguinte comando:
+Navegue até o diretório raiz do projeto (onde o `Dockerfile` está localizado) e execute o seguinte comando:
 
 ```bash
-sudo docker build -t lazarus-vnc-app .
+sudo docker build -t lazarus-x11-app .
 ```
 
-### Executando o Container
+### Executando o Container com Encaminhamento X11
 
-Para executar o container, você precisará mapear as portas e, opcionalmente, os dispositivos seriais. Substitua `/dev/ttyUSB0` pelo caminho correto do seu dispositivo serial, se houver.
+Para executar o container e exibir a aplicação gráfica na sua máquina host via X11, você precisará permitir conexões X11 do Docker e mapear o socket X11. Substitua `/dev/ttyUSB0` pelo caminho correto do seu dispositivo serial, se houver.
 
-```bash
-sudo docker run -it --rm \
-    -p 5901:5901 \
-    --device=/dev/ttyUSB0:/dev/ttyUSB0 \
-    --name lazarus-gui-container \
-    lazarus-vnc-app
-```
+1.  **Permitir conexões X11 do Docker (no seu host):**
+    ```bash
+    xhost +local:docker
+    ```
 
-- `-p 5901:5901`: Mapeia a porta VNC do container para a porta 5901 do seu host.
+2.  **Executar o container:**
+    ```bash
+    sudo docker run -it --rm \
+        -e DISPLAY=$DISPLAY \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        --device=/dev/ttyUSB0:/dev/ttyUSB0 \
+        --name lazarus-gui-container \
+        lazarus-x11-app
+    ```
+
+- `-e DISPLAY=$DISPLAY`: Passa a variável de ambiente `DISPLAY` do seu host para o container.
+- `-v /tmp/.X11-unix:/tmp/.X11-unix`: Monta o socket X11 do seu host no container, permitindo a comunicação gráfica.
 - `--device=/dev/ttyUSB0:/dev/ttyUSB0`: Mapeia um dispositivo serial do host para o container. Repita esta flag para cada dispositivo serial que você precisar.
 - `--name lazarus-gui-container`: Define um nome para o seu container.
 
-### Acessando a Aplicação via VNC
-
-Após iniciar o container, você pode se conectar a ele usando um cliente VNC (ex: RealVNC Viewer, TightVNC Viewer) no endereço `localhost:5901` (ou `seu_ip_do_host:5901`). A senha do VNC é `password` (definida no Dockerfile).
-
 ### Detecção de Portas Seriais
 
-O script `start_vnc_lazarus.sh` detectará automaticamente as portas seriais disponíveis no container (TTY e USB) e as exibirá no log. Sua aplicação Lazarus precisará ser configurada para listar e utilizar essas portas dinamicamente.
+O script `start_lazarus_app.sh` detectará automaticamente as portas seriais disponíveis no container (TTY e USB) e as exibirá no log. Sua aplicação Lazarus precisará ser configurada para listar e utilizar essas portas dinamicamente.
 
 ### Sincronização de Horário
 
